@@ -4,11 +4,16 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "parcel index.html"
+		"start:client": "parcel index.html",
+		"start:server": "json-server --watch db.json",
+		"start": "concurrently npm:start:*"
 	},
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
 		"typescript": "^3.9.7"
+	},
+	"dependencies": {
+		"axios": "^0.19.2"
 	}
 }

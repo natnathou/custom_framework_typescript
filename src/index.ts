@@ -1,19 +1,8 @@
 import { User } from './models/User';
 
-let user = new User({ name: 'myName', age: 13 });
+let user = new User({ id: 2 });
+user.set({ age: 14 });
 
-user.setUser({ name: 'phili' });
+user.save();
 
-user.on('change', () => {
-	console.log('1');
-});
-
-user.on('change', () => {
-	console.log('2');
-});
-
-user.on('click', () => {
-	console.log('2');
-});
-
-console.log(user);
+setTimeout(() => console.log(user), 4000);

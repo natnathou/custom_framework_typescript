@@ -1,49 +1,19 @@
 import { Eventing } from './Eventing';
-import axios, { AxiosResponse } from 'axios';
-interface userProps {
+import { Sync } from './Sync';
+import { Attributes } from './Attributes';
+export interface UserProps {
 	id?: number;
 	name?: string;
 	age?: number;
 }
 
+const rootUrl = `http://localhost:3000/users`;
 export class User {
-	events: Eventing = new Eventing();
+	public events: Eventing = new Eventing();
+	public sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
+	public attributes: Attributes<UserProps>;
 
-	constructor(public data: userProps) {}
-
-	get(propsName: string): userProps {
-		return this.data[propsName];
-	}
-
-	set(update: userProps): void {
-		Object.assign(this.data, update);
-	}
-
-	fetch(): void {
-		axios
-			.get(`http://localhost:3000/users/${this.get('id')}`)
-			.then((response: AxiosResponse) => {
-				this.set(response.data);
-			})
-			.catch((e) => {
-				console.log(typeof e);
-				console.log(e);
-			});
-	}
-
-	save(): void {
-		console.log('ok');
-		let id = this.get('id');
-		if (!id) {
-			axios.post(`http://localhost:3000/users`, this.data).catch((e) => {
-				console.log(e);
-			});
-		} else {
-			axios
-				.put(`http://localhost:3000/users/${id}`, this.data)
-				.catch((e) => {
-					console.log(e);
-				});
-		}
+	constructor(attrs: UserProps) {
+		this.attributes = new Attributes<UserProps>(attrs);
 	}
 }

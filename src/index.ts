@@ -1,11 +1,10 @@
-import { User } from './models/User';
+import { Collection } from './models/Collection';
+import { User, UserProps } from './models/User';
 
-let user = new User({ id: 1, name: 'neverName', age: 13 });
+const users = User.buildUserCollection();
 
-user.on('save', () => {
-	console.log(user);
+users.on('change', () => {
+	console.log(users);
 });
 
-user.fetch();
-
-user.save();
+users.fetch();
